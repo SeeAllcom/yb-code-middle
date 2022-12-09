@@ -1,1 +1,78 @@
-<p>all-products works!</p>
+<div class='flex flex-column'>
+  <div class='flex align-items-center justify-content-between mb-8'>
+    <h1>All products</h1>
+    <button label='Add new product' (click)='onAdd()' pButton></button>
+  </div>
+
+  <p-table [value]='$any(products$ | async)'
+           [paginator]='true'
+           [rows]='5'
+           [scrollable]='true'
+           styleClass='w-full'
+           scrollDirection='horizontal'
+           [rowsPerPageOptions]='[5, 10, 20]'
+           [tableStyle]="{'min-width': '60rem'}">
+    <ng-template pTemplate='header'>
+      <tr>
+        <th pSortableColumn='thumbnail' style='width:20%'>
+          Thumbnail
+          <p-sortIcon field='thumbnail'></p-sortIcon>
+        </th>
+        <th pSortableColumn='title' style='width:20%'>
+          Name
+          <p-sortIcon field='title'></p-sortIcon>
+        </th>
+        <th pSortableColumn='description' style='width:20%'>
+          Description
+          <p-sortIcon field='description'></p-sortIcon>
+        </th>
+        <th pSortableColumn='price' style='width:20%'>
+          Price
+          <p-sortIcon field='price'></p-sortIcon>
+        </th>
+        <th pSortableColumn='brand' style='width:20%'>
+          Brand
+          <p-sortIcon field='brand'></p-sortIcon>
+        </th>
+        <th style='width:20%'>Selected</th>
+        <th style='width:20%'>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate='body' let-product>
+      <tr>
+        <td>
+          <img *ngIf='!!product.thumbnail' [src]='product.thumbnail' [alt]='product.name' class='w-5rem h-5rem border-round-sm cover'
+                 style='object-fit: cover;'>
+        </td>
+        <td>{{product.title}}</td>
+        <td>{{product.description?.length > 50 ? (product.description | slice: 0: 50) + '...' : product.description}}</td>
+        <td>{{product.price | currency: 'USD'}}</td>
+        <td>{{product.brand}}</td>
+        <td class='text-center'>
+          <div class='flex w-full align-items-center justify-content-center'>
+            <p-checkbox
+              [binary]="true"
+              [ngModel]='existInSaved$(product) | async'
+              (onChange)='toggleProductToSaved($event.checked, product)'></p-checkbox>
+          </div>
+        </td>
+        <td class='text-center'>
+          <button pButton icon='pi pi-ellipsis-h' class='p-button-text p-button-rounded'
+                  (click)='$event.stopPropagation(); actionsPanel.toggle($event)' pRipple></button>
+
+          <p-overlayPanel #actionsPanel appendTo='body'>
+            <div class='flex flex-column'>
+              <p *ngFor='let action of actions' (click)='action.onAction(product)' class='cursor-pointer my-1'>
+                {{action.label}}
+              </p>
+            </div>
+          </p-overlayPanel>
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast position="top-right"></p-toast>

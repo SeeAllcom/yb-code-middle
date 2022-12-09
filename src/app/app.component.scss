@@ -1,0 +1,15 @@
+.c-root {
+  display: flex;
+  height: 100%;
+
+  &__sidebar {
+    min-width: var(--sidebar-width);
+    height: 100%;
+  }
+
+  &__content {
+    height: 100%;
+    overflow-y: auto;
+    padding: 30px;
+  }
+}

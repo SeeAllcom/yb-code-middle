@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<div class='c-root p-component'>
+  <div class='c-root__sidebar'>
+    <app-sidebar-menu></app-sidebar-menu>
+  </div>
+  <div class='c-root__content'>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<p-toast position='top-right'></p-toast>

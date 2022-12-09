@@ -1,0 +1,14 @@
+.c-sidebar {
+  height: 100%;
+  background: var(--blue-300);
+  padding: 10px;
+}
+
+.p-menuitem {
+  &-link {
+    &-active {
+      background: var(--blue-500) !important;
+      color: var(--bluegray-100) !important;
+    }
+  }
+}

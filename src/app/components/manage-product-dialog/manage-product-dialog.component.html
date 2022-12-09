@@ -1,0 +1,62 @@
+<form class='flex flex-column h-full pt-4' [formGroup]='form'>
+  <div class='grid'>
+    <div class='col-6'>
+      <div class='p-float-label' [class.filled]="!!form.get('title')?.value">
+        <input type="text"
+               id='title'
+               formControlName='title'
+               class='w-full'
+               required
+               pInputText/>
+        <label for='title'>Name *</label>
+      </div>
+    </div>
+    <div class='col-6'>
+      <div class='p-float-label' [class.filled]="!!form.get('price')?.value">
+        <input type="number"
+               id='price'
+               formControlName='title'
+               class='w-full'
+               required
+               pInputText/>
+        <label for='price'>Price *</label>
+      </div>
+    </div>
+    <div class='col-12 mt-3'>
+      <div class='p-float-label' [class.filled]="!!form.get('brand')?.value">
+        <input type="text"
+               id='brand'
+               formControlName='brand'
+               class='w-full'
+               required
+               pInputText/>
+        <label for='brand'>Brand *</label>
+      </div>
+    </div>
+    <div class='col-12 mt-3'>
+      <div class='p-float-label' [class.filled]="!!form.get('description')?.value">
+        <textarea
+          id='description'
+          class='w-full'
+          [rows]="10"
+          [autoResize]="true"
+          formControlName='description'
+          pInputTextarea></textarea>
+        <label for='description'>Description</label>
+      </div>
+    </div>
+  </div>
+
+  <div class='flex align-items-center justify-content-end mt-auto'>
+    <button style='min-width: 150px'
+            type="button"
+            class='p-button-outlined p-button-secondary'
+            label='Cancel'
+            (click)='ref.close()' pButton></button>
+    <button style='min-width: 150px'
+            type="button"
+            class='ml-3'
+            label='Save'
+            (click)='onSubmit()' pButton></button>
+  </div>
+</form>
