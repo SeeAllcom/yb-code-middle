@@ -5,7 +5,6 @@ import { BehaviorSubject, filter, Observable, take } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PRODUCT_ACTIONS } from './all-products.config';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
 import { SavedProductsService } from '../../../services/prodcuts/saved-products.service';
 
 @UntilDestroy()
@@ -19,7 +18,6 @@ export class AllProductsComponent implements OnInit {
   private productsService = inject(ProductsService);
   private confirmDialog = inject(ConfirmationService);
   private messageService = inject(MessageService);
-  private dialogService = inject(DialogService);
   private savedProductsService = inject(SavedProductsService);
 
   public products$: BehaviorSubject<IProductModel[]> = new BehaviorSubject<IProductModel[]>([]);
@@ -41,7 +39,6 @@ export class AllProductsComponent implements OnInit {
         untilDestroyed(this),
       )
       .subscribe((product) => {
-        console.log(this.products$.getValue());
         this.products$.next([product, ...this.products$.getValue()]);
       });
   }
