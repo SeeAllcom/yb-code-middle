@@ -8,11 +8,11 @@ export interface IProductAction {
 
 export const PRODUCT_ACTIONS: (context: AllProductsComponent) => IProductAction[] = (context: AllProductsComponent) => [
   {
-    label: 'Редагувати',
+    label: 'Edit',
     onAction: (product: IProductModel) => context.onEdit(product),
   },
   {
-    label: 'Видалити',
+    label: 'Delete',
     onAction: (product: IProductModel) => context.onDelete(product),
   },
 ]

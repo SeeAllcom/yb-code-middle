@@ -65,7 +65,7 @@
                 {{action.label}}
               </p>
               <p class='cursor-pointer my-1' (click)='inputFile.click()'>
-                Додати/Змінити картинку
+                Add/Change thumbnail
 
                 <input hidden type='file' accept='image/jpeg' (change)="onAddImage(product, $any($event.target).files)" #inputFile>
               </p>
