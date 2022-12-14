@@ -22,8 +22,9 @@ export class ManageProductDialogComponent implements OnInit {
     id: new FormControl(''),
     title: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
-    description: new FormControl(''),
     brand: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
   });
   public product: IProductModel;
 
@@ -55,17 +56,23 @@ export class ManageProductDialogComponent implements OnInit {
     this.productsService.add(this.form.getRawValue())
       .pipe(take(1), untilDestroyed(this))
       .subscribe((product) => {
+        console.log(product);
         this.messageService.add({ severity: 'success', summary: 'Product added successfully' });
         this.ref.close(product)
       })
   }
 
   public _onEdit(): void {
-    this.messageService.add({ severity: 'success', summary: 'Product updated successfully' });
-    this.ref.close({
-      ...this.product,
-      ...this.form.getRawValue(),
-    })
+    this.productsService.patch(this.product.id, this.form.getRawValue())
+      .pipe(take(1), untilDestroyed(this))
+      .subscribe((product) => {
+        console.log(product);
+        this.messageService.add({ severity: 'success', summary: 'Product updated successfully' });
+        this.ref.close({
+          ...this.product,
+          ...this.form.getRawValue(),
+        })
+      })
   }
 
   private _setValue(product?: IProductModel) {
@@ -75,6 +82,7 @@ export class ManageProductDialogComponent implements OnInit {
       description: product?.description || '',
       price: product?.price || '',
       brand: product?.brand || '',
+      category: product?.category || '',
     })
   }
 }

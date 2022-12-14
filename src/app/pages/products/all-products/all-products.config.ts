@@ -14,5 +14,5 @@ export const PRODUCT_ACTIONS: (context: AllProductsComponent) => IProductAction[
   {
     label: 'Видалити',
     onAction: (product: IProductModel) => context.onDelete(product),
-  }
+  },
 ]

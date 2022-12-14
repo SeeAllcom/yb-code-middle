@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API: 'https://dummyjson.com',
+  API: 'https://backend-for-applicants.smartoneclub.com',
 };
 
 /*

@@ -4,6 +4,7 @@ import { IProductModel } from '../../../services/prodcuts/model/IProductModel';
 import { SavedProductsService } from '../../../services/prodcuts/saved-products.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { environment } from '../../../../environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +20,7 @@ export class SelectedProductsComponent implements OnInit {
   private savedProductsService = inject(SavedProductsService);
 
   public products$: BehaviorSubject<IProductModel[]> = new BehaviorSubject<IProductModel[]>([]);
-  constructor() { }
+  public readonly API_URL = environment.API;
 
   ngOnInit(): void {
     this._getSelectedProductsList();

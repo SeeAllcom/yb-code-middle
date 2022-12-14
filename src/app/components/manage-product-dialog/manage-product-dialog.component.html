@@ -6,7 +6,6 @@
                id='title'
                formControlName='title'
                class='w-full'
-               required
                pInputText/>
         <label for='title'>Name *</label>
       </div>
@@ -15,22 +14,30 @@
       <div class='p-float-label' [class.filled]="!!form.get('price')?.value">
         <input type="number"
                id='price'
-               formControlName='title'
+               formControlName='price'
                class='w-full'
-               required
                pInputText/>
         <label for='price'>Price *</label>
       </div>
     </div>
-    <div class='col-12 mt-3'>
+    <div class='col-6 mt-3'>
       <div class='p-float-label' [class.filled]="!!form.get('brand')?.value">
         <input type="text"
                id='brand'
                formControlName='brand'
                class='w-full'
-               required
                pInputText/>
         <label for='brand'>Brand *</label>
+      </div>
+    </div>
+    <div class='col-6 mt-3'>
+      <div class='p-float-label' [class.filled]="!!form.get('category')?.value">
+        <input type="text"
+               id='category'
+               formControlName='category'
+               class='w-full'
+               pInputText/>
+        <label for='category'>Category *</label>
       </div>
     </div>
     <div class='col-12 mt-3'>

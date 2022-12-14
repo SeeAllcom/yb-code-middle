@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API: 'https://dummyjson.com/'
+  API: 'https://backend-for-applicants.smartoneclub.com'
 };

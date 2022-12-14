@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PRODUCT_ACTIONS } from './all-products.config';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SavedProductsService } from '../../../services/prodcuts/saved-products.service';
+import { environment } from '../../../../environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -22,6 +23,7 @@ export class AllProductsComponent implements OnInit {
 
   public products$: BehaviorSubject<IProductModel[]> = new BehaviorSubject<IProductModel[]>([]);
   public readonly actions = PRODUCT_ACTIONS(this);
+  public readonly API_URL = environment.API;
 
   ngOnInit(): void {
     this._getProductsList();
@@ -29,6 +31,17 @@ export class AllProductsComponent implements OnInit {
 
   public existInSaved$(product: IProductModel): Observable<boolean> {
     return this.savedProductsService.existInSaved$(product);
+  }
+
+  public onAddImage(product: IProductModel, value: FileList): void {
+    this.productsService.addImage(product.id, value)
+      .pipe(
+        take(1),
+        untilDestroyed(this),
+      )
+      .subscribe((product) => {
+        this._getProductsList();
+      });
   }
 
   public onAdd(): void {
@@ -39,7 +52,7 @@ export class AllProductsComponent implements OnInit {
         untilDestroyed(this),
       )
       .subscribe((product) => {
-        this.products$.next([product, ...this.products$.getValue()]);
+        this._getProductsList();
       });
   }
 
@@ -51,9 +64,7 @@ export class AllProductsComponent implements OnInit {
         untilDestroyed(this),
       )
       .subscribe((product) => {
-        const updatedProductIndex = this.products$.getValue().findIndex((el) => el.id === product.id)
-        this.products$.getValue()[updatedProductIndex] = product;
-        this.products$.next(this.products$.getValue());
+        this._getProductsList();
       });
   }
 
@@ -91,8 +102,8 @@ export class AllProductsComponent implements OnInit {
       .pipe(take(1), untilDestroyed(this))
       .subscribe((res) => {
         this.messageService.add({ severity: 'success', summary: 'Product deleted successfully' });
-        this.products$.next(this.products$.getValue().filter((el) => el.id !== res.id));
         this.savedProductsService.removeProduct(id);
+        this._getProductsList();
       });
   }
 

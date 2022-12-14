@@ -25,15 +25,33 @@ export class ProductsService {
   }
 
   public add(dto: Partial<IProductModel>): Observable<IProductModel> {
-    return  this.http.post<IProductModel>(`${ApiConfig.products}add`, { ...dto });
+    return this.http.post<{data: IProductModel}>(`${ApiConfig.product}`, { ...dto }).pipe(
+      map((res) => res.data),
+    );
   }
 
-  public put(id: number, dto: Partial<IProductModel>): Observable<IProductModel> {
-    return  this.http.put<IProductModel>(`${ApiConfig.products}${id}`, { ...dto });
+  public patch(id: number, dto: Partial<IProductModel>): Observable<IProductModel> {
+    return this.http.patch<{data: IProductModel}>(`${ApiConfig.product}/${id}`, { ...dto }).pipe(
+      map((res) => res.data),
+    );
   }
 
   public delete(id: number): Observable<IProductModel> {
-    return this.http.delete<IProductModel>(`${ApiConfig.products}${id}`);
+    return this.http.delete<{data: IProductModel}>(`${ApiConfig.product}/${id}`).pipe(
+      map((res) => res.data),
+    );
+  }
+
+  public addImage(id: number, fileList: FileList): Observable<IProductModel> {
+    console.log(fileList);
+    const file = fileList[0];
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    return this.http.post<{data: IProductModel}>(`${ApiConfig.product}/${id}/image`,  formData).pipe(
+      map((res) => res.data),
+    );
   }
 
   public openManageDialog(product?: IProductModel) {

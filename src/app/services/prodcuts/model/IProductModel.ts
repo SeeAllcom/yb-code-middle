@@ -4,5 +4,6 @@ export interface IProductModel {
   description: string;
   price: number; // required
   brand: string; // required
-  thumbnail: string;
+  category: string; // required
+  image: string;
 }
